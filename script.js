@@ -17,13 +17,19 @@ function searchCallback(results) {
         } else {
             imgURL = results[i].image.small_url;
         }
-
-        str += "<div class='well col-md-4'>" +
+        // Put in rows
+        if( i % 3 == 0){
+            str += "<div class='row'>"
+        }
+        str += "<div class='well col-md-4 col-sm-6 col-xs-6'>" +
             "<img class='hidden-sm hidden-xs' src=" + imgURL + ">"
             + "<br><p class='lead'>" + results[i].name
             + "</p><br>" + results[i].deck
             + "<br><button class='btn-success btn'>Remove Title</button>"
             + "</div>";
+        if( (i+1) % 3 == 0){
+            str += "</div>"
+        }
 
     }
     $('.results').append(str);
