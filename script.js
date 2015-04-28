@@ -34,14 +34,16 @@ function searchCallback(results) {
     }
     $('.results').append(str).hide().fadeIn(1000);
 
-    $('.btn').on('click', function () {
-        $(this).parent('div').fadeOut(1000);
-    });
 }
 $(document).ready(function() {
 
 	// Start the search here!
 	search('batman');
+
+    $('body').on('click','.btn', function () {
+        $(this).parent('div').fadeOut(1000);
+    });
+
 });
 
 // HELPER FUNCTION
