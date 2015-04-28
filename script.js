@@ -8,24 +8,30 @@ var imgURL;
 function searchCallback(results) {
     str = '';
 
-    for(i = 0;i < 9; i++){
+    for (i = 0; i < 9; i++) {
         console.log(results[i]);
 
         //image
-        if(!results[i].image){
+        if (!results[i].image) {
             imgURL = "sad_face.jpg";
         } else {
             imgURL = results[i].image.small_url;
         }
 
         str += "<div class='well col-md-4'>" +
-            "<img class='hidden-sm hidden-xs' src=" + imgURL + "><br>"
-        + "</div>";
+            "<img class='hidden-sm hidden-xs' src=" + imgURL + ">"
+            + "<br><p class='lead'>" + results[i].name
+            + "</p><br>" + results[i].deck
+            + "<br><button class='btn-success btn'>Remove Title</button>"
+            + "</div>";
 
     }
     $('.results').append(str);
-}
 
+    $('.btn').on('click', function () {
+        $(this).parent('div').remove();
+    });
+}
 $(document).ready(function() {
 
 	// Start the search here!
