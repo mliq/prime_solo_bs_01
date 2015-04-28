@@ -32,10 +32,10 @@ function searchCallback(results) {
         }
 
     }
-    $('.results').append(str);
+    $('.results').append(str).hide().fadeIn(1000);
 
     $('.btn').on('click', function () {
-        $(this).parent('div').remove();
+        $(this).parent('div').fadeOut(1000);
     });
 }
 $(document).ready(function() {
