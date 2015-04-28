@@ -2,6 +2,9 @@ var apikey = 'b5749836178866bb15f4b41b15ac30c692573f21'; // Put your API key her
 var i = 0;
 var str;
 var imgURL;
+var resultData;
+var newData = [];
+var number;
 
 // Use this function to do stuff with your results. 
 // It is called after 'search' is executed.
@@ -21,7 +24,7 @@ function searchCallback(results) {
         if( i % 3 == 0){
             str += "<div class='row'>"
         }
-        str += "<div class='well col-md-4 col-sm-6 col-xs-6'>" +
+        str += "<div class='well col-md-4 col-sm-6 col-xs-6' data-number='"+i+"'>" +
             "<img class='hidden-sm hidden-xs' src=" + imgURL + ">"
             + "<br><p class='lead'>" + results[i].name
             + "</p><br>" + results[i].deck
@@ -33,7 +36,7 @@ function searchCallback(results) {
 
     }
     $('.results').append(str).hide().fadeIn(1000);
-
+    return results;
 }
 $(document).ready(function() {
 
@@ -41,9 +44,21 @@ $(document).ready(function() {
 	search('batman');
 
     $('body').on('click','.btn', function () {
+        // Get number we will remove from data.
+        number = $(this).parent('div').data('number');
+        console.log(number);
+        // Fade out visually the data and delay
         $(this).parent('div').fadeOut(1000);
+        // Redraw the data without the removed data.
+        if(newData.length == 0) {
+            newData = resultData.slice();
+        }
+        newData.splice(number,1);
+        window.setTimeout(function(){
+            $('.results').empty();
+            searchCallback(newData);
+        },1000);
     });
-
 });
 
 // HELPER FUNCTION
@@ -60,6 +75,7 @@ function search(query){
 	        console.log('ajax complete');
 	    },
 	    success: function(data) {
+            resultData = data.results.slice();
 	        searchCallback(data.results);
 	    }
 	});
